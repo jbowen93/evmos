@@ -38,7 +38,7 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/btcsuite/btcd v0.22.0-beta // indirect
 	github.com/btcsuite/btcutil v1.0.3-0.20201208143702-a53e38424cce // indirect
-	github.com/celestiaorg/optimint v0.0.0-20211117164551-516a7bb2655d // indirect
+	github.com/celestiaorg/optimint v0.0.0-20211119113807-406ce5950325 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -246,4 +246,4 @@ replace github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210
 // TODO: remove once v0.45 has been released
 replace github.com/cosmos/cosmos-sdk => github.com/tharsis/cosmos-sdk v0.44.3-olympus
 
-replace github.com/tharsis/ethermint => github.com/celestiaorg/ethermint v0.6.1-0.20211118122445-fbd9e581f978
+replace github.com/tharsis/ethermint => github.com/celestiaorg/ethermint v0.6.1-0.20211119121737-68d87bd5ad40
