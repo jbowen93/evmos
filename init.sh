@@ -1,6 +1,7 @@
+#!/bin/sh
 
 KEY="mykey"
-CHAINID="evmosopti_9000-1"
+CHAINID="opti_9000-1"
 MONIKER="localtestnet"
 KEYRING="test"
 KEYALGO="eth_secp256k1"
@@ -15,7 +16,7 @@ command -v jq > /dev/null 2>&1 || { echo >&2 "jq not installed. More info: https
 # remove existing daemon
 rm -rf ~/.evmosd*
 
-make install
+# make install
 
 evmosd config keyring-backend $KEYRING
 evmosd config chain-id $CHAINID
@@ -39,13 +40,13 @@ cat $HOME/.evmosd/config/genesis.json | jq '.consensus_params["block"]["time_iot
 cat $HOME/.evmosd/config/genesis.json | jq '.consensus_params["block"]["max_gas"]="10000000"' > $HOME/.evmosd/config/tmp_genesis.json && mv $HOME/.evmosd/config/tmp_genesis.json $HOME/.evmosd/config/genesis.json
 
 # disable produce empty block
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if [[ "$OSTYPE" == "darwin"* ]; then
     sed -i '' 's/create_empty_blocks = true/create_empty_blocks = false/g' $HOME/.evmosd/config/config.toml
   else
     sed -i 's/create_empty_blocks = true/create_empty_blocks = false/g' $HOME/.evmosd/config/config.toml
 fi
 
-if [[ $1 == "pending" ]]; then
+if [[ "$1" == "pending" ]]; then
   if [[ "$OSTYPE" == "darwin"* ]]; then
       sed -i '' 's/create_empty_blocks_interval = "0s"/create_empty_blocks_interval = "30s"/g' $HOME/.evmosd/config/config.toml
       sed -i '' 's/timeout_propose = "3s"/timeout_propose = "30s"/g' $HOME/.evmosd/config/config.toml
@@ -81,7 +82,7 @@ evmosd collect-gentxs
 # Run this to ensure everything worked and that the genesis file is setup correctly
 evmosd validate-genesis
 
-if [[ $1 == "pending" ]]; then
+if [[ "$1" == "pending" ]]; then
   echo "pending mode is on, please wait for the first block committed."
 fi
 
