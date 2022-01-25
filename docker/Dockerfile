@@ -24,6 +24,7 @@ RUN apk add --update ca-certificates jq
 WORKDIR /root
 
 COPY docker/entrypoint.sh .
+COPY init.sh .
 
 # Copy over binaries from the build-env
 COPY --from=build-env /go/src/github.com/tharsis/evmos/build/evmosd /usr/bin/evmosd
