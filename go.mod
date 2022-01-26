@@ -248,6 +248,6 @@ replace github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210
 replace github.com/cosmos/cosmos-sdk => github.com/tharsis/cosmos-sdk v0.44.3-olympus
 
 // replace github.com/tharsis/ethermint => github.com/celestiaorg/ethermint v0.6.1-0.20211119121737-68d87bd5ad40
-replace github.com/tharsis/ethermint => github.com/jbowen93/ethermint v0.6.1-0.20220126010845-de36b010483b
+replace github.com/tharsis/ethermint => github.com/jbowen93/ethermint v0.6.1-0.20220126203443-f611b0d858da
 
-replace github.com/celestiaorg/optimint => github.com/jbowen93/optimint v0.0.0-20220126010530-4315eac44de9
+replace github.com/celestiaorg/optimint => github.com/jbowen93/optimint v0.0.0-20220126203110-0905be5c836a
