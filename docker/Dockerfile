@@ -21,6 +21,7 @@ FROM alpine
 
 # Install ca-certificates
 RUN apk add --update ca-certificates jq
+
 WORKDIR /root
 
 COPY docker/entrypoint.sh .

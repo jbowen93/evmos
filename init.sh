@@ -40,7 +40,7 @@ cat $HOME/.evmosd/config/genesis.json | jq '.consensus_params["block"]["time_iot
 cat $HOME/.evmosd/config/genesis.json | jq '.consensus_params["block"]["max_gas"]="10000000"' > $HOME/.evmosd/config/tmp_genesis.json && mv $HOME/.evmosd/config/tmp_genesis.json $HOME/.evmosd/config/genesis.json
 
 # disable produce empty block
-if [[ "$OSTYPE" == "darwin"* ]; then
+if [[ "$OSTYPE" == "darwin"* ]]; then
     sed -i '' 's/create_empty_blocks = true/create_empty_blocks = false/g' $HOME/.evmosd/config/config.toml
   else
     sed -i 's/create_empty_blocks = true/create_empty_blocks = false/g' $HOME/.evmosd/config/config.toml
@@ -81,10 +81,3 @@ evmosd collect-gentxs
 
 # Run this to ensure everything worked and that the genesis file is setup correctly
 evmosd validate-genesis
-
-if [[ "$1" == "pending" ]]; then
-  echo "pending mode is on, please wait for the first block committed."
-fi
-
-# Start the node (remove the --pruning=nothing flag if historical queries are not needed)
-evmosd start --pruning=nothing $TRACE --log_level $LOGLEVEL --minimum-gas-prices=0.0001aphoton --json-rpc.api eth,txpool,personal,net,web3 --optimint.aggregator=true --optimint.da_layer=mock
