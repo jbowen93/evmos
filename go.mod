@@ -252,5 +252,5 @@ replace github.com/cosmos/cosmos-sdk => github.com/tharsis/cosmos-sdk v0.44.3-ol
 
 // replace github.com/celestiaorg/optimint => github.com/jbowen93/optimint v0.0.0-20220126203110-0905be5c836a
 
-replace github.com/tharsis/ethermint => /go/src/github.com/tharsis/evmos/ethermint
-replace github.com/celestiaorg/optimint => /go/src/github.com/tharsis/evmos/optimint
+replace github.com/tharsis/ethermint => /go/src/github.com/tharsis/evmos/local-ethermint
+replace github.com/celestiaorg/optimint => /go/src/github.com/tharsis/evmos/local-optimint
