@@ -18,13 +18,17 @@ func NewPrefixKV(kv KVStore, prefix []byte) *PrefixKV {
 }
 
 func (p *PrefixKV) Get(key []byte) ([]byte, error) {
-	fmt.Print("[optimint] prefix.go PrefixKV.Get(key)\n")
-	fmt.Printf("[optimint] prefix.go key: %v\n", key)
+	fmt.Printf("[prefix.go] PrefixKV Prefix hex: %x\n", p.prefix)
+	//fmt.Printf("[prefix.go] PrefixKV Get key: %#v\n", key)
+	fmt.Printf("[prefix.go] PrefixKV Get hex key: %x\n", key)
 
 	return p.kv.Get(append(p.prefix, key...))
 }
 
 func (p *PrefixKV) Set(key []byte, value []byte) error {
+	fmt.Printf("[prefix.go] PrefixKV Prefix hex: %x\n", p.prefix)
+	//fmt.Printf("[prefix.go] PrefixKV Set key: %#v\n", key)
+	fmt.Printf("[prefix.go] PrefixKV Set hex key: %x\n", key)
 	return p.kv.Set(append(p.prefix, key...), value)
 }
 
@@ -48,6 +52,12 @@ type PrefixKVBatch struct {
 }
 
 func (pb *PrefixKVBatch) Set(key, value []byte) error {
+	fmt.Printf("[prefix.go] PrefixKVBatch Prefix hex: %x\n", pb.prefix)
+	//fmt.Printf("[prefix.go] PrefixKVBatch Set key: %#v\n", key)
+	fmt.Printf("[prefix.go] PrefixKVBatch Set hex key: %x\n", key)
+	//fmt.Printf("[prefix.go] PrefixKVBatch Set value: %#v\n", value)
+	fmt.Printf("[prefix.go] PrefixKVBatch Set hex value: %x\n", value)
+
 	return pb.b.Set(append(pb.prefix, key...), value)
 }
 

@@ -257,6 +257,10 @@ func (e *BlockExecutor) execute(ctx context.Context, state State, block *types.B
 	}
 
 	for _, tx := range block.Data.Txs {
+		//_ := e.proxyApp.DeliverTxAsync(abci.RequestDeliverTx{Tx: tx})
+		//if e.proxyApp.Error() != nil {
+		//	return nil, err
+		//}
 		res := e.proxyApp.DeliverTxAsync(abci.RequestDeliverTx{Tx: tx})
 		if res.GetException() != nil {
 			return nil, errors.New(res.GetException().GetError())

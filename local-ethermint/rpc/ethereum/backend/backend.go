@@ -741,7 +741,7 @@ func (e *EVMBackend) GetTransactionByHash(txHash common.Hash) (*types.RPCTransac
 func (e *EVMBackend) GetTxByEthHash(hash common.Hash) (*tmrpctypes.ResultTx, error) {
 	fmt.Print("[ethermint] backend.go GetTxByEthHash\n")
 	fmt.Printf("[ethermint] hash: %#v\n", hash)
-	
+
 	query := fmt.Sprintf("%s.%s='%s'", evmtypes.TypeMsgEthereumTx, evmtypes.AttributeKeyEthereumTxHash, hash.Hex())
 	resTxs, err := e.clientCtx.Client.TxSearch(e.ctx, query, false, nil, nil, "")
 	if err != nil {
@@ -830,8 +830,12 @@ func (e *EVMBackend) SendTransaction(args evmtypes.TransactionArgs) (common.Hash
 		e.logger.Error("failed to encode eth tx using default encoder", "error", err.Error())
 		return common.Hash{}, err
 	}
+	byteSlice := []byte(fmt.Sprintf("%v", msg.AsTransaction()))
+	fmt.Printf("[backend.go] lazy serial msg.AsTransaction() byteSlice: %#v\n", byteSlice)
 
 	txHash := msg.AsTransaction().Hash()
+	fmt.Printf("[backend.go] SendTransaction txHash: %#v\n", txHash)
+	fmt.Printf("[backend.go] SendTransaction txHash hex: %x\n", txHash)
 
 	// Broadcast transaction in sync mode (default)
 	// NOTE: If error is encountered on the node, the broadcast will not return an error

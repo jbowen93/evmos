@@ -27,10 +27,10 @@ func (k *Keeper) EVMConfig(ctx sdk.Context) (*types.EVMConfig, error) {
 	ethCfg := params.ChainConfig.EthereumConfig(k.eip155ChainID)
 
 	// get the coinbase address from the block proposer
-	coinbase, err := k.GetCoinbaseAddress(ctx)
-	if err != nil {
-		return nil, stacktrace.Propagate(err, "failed to obtain coinbase address")
-	}
+	//coinbase, err := k.GetCoinbaseAddress(ctx)
+	//if err != nil {
+	//	return nil, stacktrace.Propagate(err, "failed to obtain coinbase address")
+	//}
 
 	var baseFee *big.Int
 	if types.IsLondon(ethCfg, ctx.BlockHeight()) {
@@ -40,8 +40,9 @@ func (k *Keeper) EVMConfig(ctx sdk.Context) (*types.EVMConfig, error) {
 	return &types.EVMConfig{
 		Params:      params,
 		ChainConfig: ethCfg,
-		CoinBase:    coinbase,
-		BaseFee:     baseFee,
+		CoinBase:    common.Address{},
+		//CoinBase:    coinbase,
+		BaseFee: baseFee,
 	}, nil
 }
 
