@@ -5,9 +5,13 @@ import (
 	"context"
 	"encoding/hex"
 	"fmt"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/rlp"
 	"github.com/gogo/protobuf/proto"
 	"strconv"
 	"strings"
+	"sync"
 
 	abci "github.com/tendermint/tendermint/abci/types"
 	"github.com/tendermint/tendermint/libs/pubsub/query"
@@ -16,6 +20,7 @@ import (
 	"github.com/celestiaorg/optimint/state/indexer"
 	"github.com/celestiaorg/optimint/state/txindex"
 	"github.com/celestiaorg/optimint/store"
+	"golang.org/x/crypto/sha3"
 )
 
 const (
@@ -23,6 +28,19 @@ const (
 )
 
 var _ txindex.TxIndexer = (*TxIndex)(nil)
+
+var hasherPool = sync.Pool{
+	New: func() interface{} { return sha3.NewLegacyKeccak256() },
+}
+
+func rlpHash(x interface{}) (h common.Hash) {
+	sha := hasherPool.Get().(crypto.KeccakState)
+	defer hasherPool.Put(sha)
+	sha.Reset()
+	rlp.Encode(sha, x)
+	sha.Read(h[:])
+	return h
+}
 
 // TxIndex is the simplest possible indexer, backed by key-value storage (levelDB).
 type TxIndex struct {
@@ -39,8 +57,8 @@ func NewTxIndex(store store.KVStore) *TxIndex {
 // Get gets transaction from the TxIndex storage and returns it or nil if the
 // transaction is not found.
 func (txi *TxIndex) Get(hash []byte) (*abci.TxResult, error) {
-	fmt.Print("[optimint] txinder/kv/kv.go txi.Get(hash)\n")
-	fmt.Printf("[optimint] txi.Get(hash) hash: %#v\n", hash)
+	fmt.Printf("[kv.go] TxIndex Get hash: %#v\n", hash)
+	fmt.Printf("[kv.go] TxIndex Get hex hash: %x\n", hash)
 
 	if len(hash) == 0 {
 		return nil, txindex.ErrorEmptyHash
@@ -50,7 +68,6 @@ func (txi *TxIndex) Get(hash []byte) (*abci.TxResult, error) {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Print("[optimint] txi.store.Get(hash) passed\n", hash)
 
 	if rawBytes == nil {
 		return nil, nil
@@ -72,10 +89,24 @@ func (txi *TxIndex) Get(hash []byte) (*abci.TxResult, error) {
 func (txi *TxIndex) AddBatch(b *txindex.Batch) error {
 	storeBatch := txi.store.NewBatch()
 	defer storeBatch.Discard()
+	fmt.Printf("[kv.go] store.Batch: %#v\n", storeBatch)
 
 	for _, result := range b.Ops {
-		fmt.Printf("kv.go result: %#v\n", result)
-		hash := types.Tx(result.Tx).Hash()
+		fmt.Printf("[kv.go] result: %#v\n", result)
+		// Lazy serialization
+		byteSlice := []byte(fmt.Sprintf("%v", types.Tx(result.Tx)))
+		fmt.Printf("[kv.go] lazy serial types.Tx(result.Tx) byteSlice: %#v\n", byteSlice)
+
+		shaHash := types.Tx(result.Tx).Hash()
+		hash := shaHash
+		//tempHash := rlpHash(types.Tx(result.Tx))
+		//hash := tempHash[:]
+
+		//fmt.Printf("[kv.go] TxIndex AddBatch hash: %#v\n", hash)
+		//fmt.Printf("[kv.go] TxIndex AddBatch hash hex: %x\n", hash)
+
+		fmt.Printf("[kv.go] TxIndex AddBatch shaHash: %#v\n", shaHash)
+		fmt.Printf("[kv.go] TxIndex AddBatch shaHash hex: %x\n", shaHash)
 
 		// index tx by events
 		err := txi.indexEvents(result, hash, storeBatch)
@@ -199,6 +230,8 @@ func (txi *TxIndex) Search(ctx context.Context, q *query.Query) ([]*abci.TxResul
 
 	// if there is a hash condition, return the result immediately
 	hash, ok, err := lookForHash(conditions)
+	//fmt.Printf("[kv.go] TxIndex Search hash: %#v\n", hash)
+	//fmt.Printf("[kv.go] TxIndex Search hex key: %x\n", hash)
 	if err != nil {
 		return nil, fmt.Errorf("error during searching for a hash in the query: %w", err)
 	} else if ok {
@@ -298,11 +331,12 @@ func (txi *TxIndex) Search(ctx context.Context, q *query.Query) ([]*abci.TxResul
 func lookForHash(conditions []query.Condition) (hash []byte, ok bool, err error) {
 	for _, c := range conditions {
 
-		// if c.CompositeKey == types.TxHashKey {
-		// if c.CompositeKey == fmt.Sprintf("%s.%s", evmtypes.TypeMsgEthereumTx, evmtypes.AttributeKeyEthereumTxHash)
-		if c.CompositeKey == "ethereum_tx.ethereumTxHash" {
+		if c.CompositeKey == types.TxHashKey {
+			decoded, err := hex.DecodeString(c.Operand.(string))
+			// if c.CompositeKey == fmt.Sprintf("%s.%s", evmtypes.TypeMsgEthereumTx, evmtypes.AttributeKeyEthereumTxHash)
+			//if c.CompositeKey == "ethereum_tx.ethereumTxHash" {
 			fmt.Printf("[optimint] kv.go lookForHash strings.TrimPrefix(c.Operand.(string): %#v\n", strings.TrimPrefix(c.Operand.(string), "0x"))
-			decoded, err := hex.DecodeString(strings.TrimPrefix(c.Operand.(string), "0x"))
+			//decoded, err := hex.DecodeString(strings.TrimPrefix(c.Operand.(string), "0x"))
 			fmt.Printf("[optimint] kv.go lookForHash hex.DecodeString: %#v\n", decoded)
 
 			return decoded, true, err

@@ -23,20 +23,20 @@ type BadgerKV struct {
 
 // Get returns value for given key, or error.
 func (b *BadgerKV) Get(key []byte) ([]byte, error) {
-	fmt.Print("[optimint] badger.go BadgerKv.Get(key)\n")
-	fmt.Printf("[optimint] badger.go key: %v\n", key)
+	fmt.Printf("[badger.go] BadgerKV Get key: %#v\n", key)
+	fmt.Printf("[badger.go] BadgerKV Get key hex: %x\n", key)
 
 	txn := b.db.NewTransaction(false)
 	defer txn.Discard()
 	item, err := txn.Get(key)
 	if errors.Is(err, badger.ErrKeyNotFound) {
-		fmt.Printf("[optimint] badger.go BadgerKv.Get(key) err: %v\n", badger.ErrKeyNotFound)
-
 		return nil, ErrKeyNotFound
 	}
 	if err != nil {
+		fmt.Printf("[badger.go] txn.Get err: %#v\n", err)
 		return nil, err
 	}
+	fmt.Printf("[badger.go] txn.Get item.String(): %#v\n", item.String())
 	return item.ValueCopy(nil)
 }
 
@@ -77,6 +77,13 @@ type BadgerBatch struct {
 
 // Set accumulates key-value entries in a transaction
 func (bb *BadgerBatch) Set(key, value []byte) error {
+	fmt.Printf("[badger.go] BadgerBatch Set hex key: %x\n", key)
+	fmt.Printf("[badger.go] BadgerBatch Set hex value: %x\n", value)
+
+	//fmt.Printf("[badger.go] BadgerBatch Set key: %#v\n", key)
+	//fmt.Printf("[badger.go] BadgerBatch Set hex key: %x\n", key)
+	//fmt.Printf("[badger.go] BadgerBatch Set value: %#v\n", value)
+	//fmt.Printf("[badger.go] BadgerBatch Set hex value: %x\n", value)
 	if err := bb.txn.Set(key, value); err != nil {
 		return err
 	}
@@ -130,7 +137,7 @@ func (i *BadgerIterator) Next() {
 }
 
 func (i *BadgerIterator) Key() []byte {
-	return i.iter.Item().Key()
+	return i.iter.Item().KeyCopy(nil)
 }
 
 func (i *BadgerIterator) Value() []byte {
