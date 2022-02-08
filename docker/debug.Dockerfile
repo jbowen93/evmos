@@ -9,7 +9,6 @@ WORKDIR /go/src/github.com/tharsis/evmos
 # Install dependencies
 RUN apt update
 RUN apt install git
-# RUN apt install linux-headers
 
 # Build Delve
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
