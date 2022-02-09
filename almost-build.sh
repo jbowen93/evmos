@@ -1,13 +1,9 @@
 #!/bin/sh
 
-DOCKER_TAG=$1
-
 WORKDIR=$PWD
 rm -rf optimint ethermint
 
 # Get Optimint
-git clone git@github.com:celestiaorg/optimint.git -q
-echo "cloned optimint"
 cd optimint
 git checkout 939aa77 -q
 echo "checked out 939aa77 commit"
