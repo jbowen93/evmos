@@ -19,8 +19,8 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.17
-      - name: "Build"
-        run: "make build"
+      - name: almost-build
+        run: ./almost-build.sh
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -35,5 +35,5 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ghcr.io/celestiaorg/celestia-node:latest
-          file: docker/Dockerfile
+          tags: ghcr.io/jbowen93/evmos:gh-action
+          file: docker/debug.Dockerfile
