@@ -245,13 +245,6 @@ replace github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210
 // TODO: remove once v0.45 has been released
 replace github.com/cosmos/cosmos-sdk => github.com/tharsis/cosmos-sdk v0.44.3-olympus
 
-// replace github.com/tharsis/ethermint => github.com/jbowen93/ethermint v0.6.1-0.20220126203443-f611b0d858da
-
-// replace github.com/celestiaorg/optimint => github.com/jbowen93/optimint v0.0.0-20220126203110-0905be5c836a
-
-// replace github.com/tharsis/ethermint => /go/src/github.com/tharsis/evmos/ethermint
-// replace github.com/celestiaorg/optimint => /go/src/github.com/tharsis/evmos/optimint
-
 replace github.com/tharsis/ethermint => ./ethermint
 
 replace github.com/celestiaorg/optimint => ./optimint
