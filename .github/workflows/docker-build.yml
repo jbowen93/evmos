@@ -15,7 +15,8 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
-        ref: 'jbowen93/debug-gh-action'
+        with:
+          ref: 'jbowen93/debug-gh-action'
       - name: Set up Go
         uses: actions/setup-go@v2
         with:
