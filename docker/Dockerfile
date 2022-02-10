@@ -14,7 +14,7 @@ RUN apk add linux-headers
 COPY . .
 
 # Make the binary
-RUN make build
+RUN go mod tidy -compat=1.17 -e && make build
 
 # Final image
 FROM alpine
