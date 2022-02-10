@@ -17,12 +17,6 @@ jobs:
         uses: "actions/checkout@v2"
         with:
           ref: 'jbowen93/debug-gh-action'
-      - name: Set up Go
-        uses: actions/setup-go@v2
-        with:
-          go-version: 1.17
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
       - name: Login to GHCR
@@ -34,7 +28,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: false
           tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/Dockerfile
