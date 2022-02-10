@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  docker-build:
+  amd64:
     runs-on: "ubuntu-latest"
     permissions:
       contents: write 
@@ -29,6 +29,31 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64
+          push: false
+          tags: ghcr.io/jbowen93/evmos:gh-action
+          file: docker/Dockerfile
+  arm64:
+    runs-on: "ubuntu-latest"
+    permissions:
+      contents: write 
+      packages: write 
+    steps:
+      - name: "Checkout source code"
+        uses: "actions/checkout@v2"
+        with:
+          ref: 'jbowen93/debug-gh-action'
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to GHCR
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          platforms: linux/arm64
           push: false
           tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/Dockerfile
