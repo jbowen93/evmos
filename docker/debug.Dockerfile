@@ -7,8 +7,8 @@ ENV COSMOS_BUILD_OPTIONS nostrip
 WORKDIR /go/src/github.com/tharsis/evmos
 
 # Install dependencies
-RUN apt update
-RUN apt install git
+RUN apt-get update
+RUN apt-get install git
 
 # Build Delve
 RUN go install github.com/go-delve/delve/cmd/dlv@latest

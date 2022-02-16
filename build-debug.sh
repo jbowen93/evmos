@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/bin/bash
 
 DOCKER_TAG=$1
+arch=$(uname -p)
 
 WORKDIR=$PWD
 rm -rf optimint ethermint
 
 # Get Optimint
-git clone git@github.com:celestiaorg/optimint.git -q
+git clone git@github.com:jbowen93/optimint.git -q
 echo "cloned optimint"
 cd optimint
-git checkout 939aa77 -q
-echo "checked out 939aa77 commit"
+echo "checked out state-store branch"
 rm -rf .git
 go mod tidy -compat=1.17 -e
 echo "finished tidying optimint"
@@ -35,4 +35,12 @@ go mod tidy -compat=1.17 -e
 echo "finished tidying evmos"
 
 # Docker build
-docker buildx build --platform linux/arm64 -f docker/debug.Dockerfile -t ghcr.io/jbowen93/evmos:$DOCKER_TAG .
+if [ $arch=x86_64 ]
+then
+    docker buildx build --platform linux/amd64 -f docker/debug.Dockerfile -t ghcr.io/jbowen93/evmos:$DOCKER_TAG .
+elif [ $arch=arm ] 
+then
+    docker buildx build --platform linux/arm64 -f docker/debug.Dockerfile -t ghcr.io/jbowen93/evmos:$DOCKER_TAG .
+else
+    echo "architecture is not one of x86_64 or arm"
+fi
