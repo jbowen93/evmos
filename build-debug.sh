@@ -10,8 +10,6 @@ rm -rf optimint ethermint
 git clone git@github.com:celestiaorg/optimint.git -q
 echo "cloned optimint"
 cd optimint
-git checkout tzdybal/save_responses -q
-echo "checked out tzdybal/save_response branch"
 rm -rf .git
 go mod tidy -compat=1.17 -e
 echo "finished tidying optimint"
