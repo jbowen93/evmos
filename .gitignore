@@ -31,9 +31,9 @@ docs-tools-stamp
 proto-tools-stamp
 golangci-lint
 keyring_test_cosmos
-./**/node_modules
 ./**/dist
 secret.yml
+artifacts/*
 # vue/
 
 # Local docker volume mappings
@@ -70,11 +70,16 @@ dependency-graph.png
 *.abi
 
 # Node.js
+**/node_modules
 tests/**/node_modules/*
 tests-solidity/**/node_modules/*
+
+# OpenZeppelin contracts
+contracts/@openzeppelin/*
 
 # Ethermint
 ethermint
 
 # Optimint
 optimint
+
