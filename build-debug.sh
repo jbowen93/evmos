@@ -7,10 +7,11 @@ WORKDIR=$PWD
 rm -rf optimint ethermint
 
 # Get Optimint
-git clone git@github.com:jbowen93/optimint.git -q
+git clone git@github.com:celestiaorg/optimint.git -q
 echo "cloned optimint"
 cd optimint
-echo "checked out state-store branch"
+git checkout tzdybal/save_responses -q
+echo "checked out tzdybal/save_response branch"
 rm -rf .git
 go mod tidy -compat=1.17 -e
 echo "finished tidying optimint"
