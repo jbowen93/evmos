@@ -12,9 +12,7 @@ pull_request_rules:
     actions:
       queue:
         name: default
-      merge:
         method: squash
-        strict: true
         commit_message: title+body
   - name: backport patches to v0.3.x branch
     conditions:
@@ -24,3 +22,11 @@ pull_request_rules:
       backport:
         branches:
           - release/v0.3.x
+  - name: backport patches to v0.4.x branch
+    conditions:
+      - base=main
+      - label=backport/0.4.x
+    actions:
+      backport:
+        branches:
+          - release/v0.4.x
