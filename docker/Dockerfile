@@ -21,7 +21,7 @@ FROM debian
 
 # Install ca-certificates
 RUN apt-get update
-RUN apt-get install -y jq procps
+RUN apt-get install -y jq
 
 WORKDIR /root
 
