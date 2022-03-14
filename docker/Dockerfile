@@ -17,11 +17,10 @@ COPY . .
 RUN make build 
 
 # Final image
-FROM debian
+FROM alpine
 
 # Install ca-certificates
-RUN apt-get update
-RUN apt-get install -y jq
+RUN apk add --update ca-certificates jq
 
 WORKDIR /root
 
