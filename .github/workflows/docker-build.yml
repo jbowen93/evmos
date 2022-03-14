@@ -20,8 +20,6 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
-        # with:
-        #   ref: 'jbowen93/debug-gh-action'
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -51,7 +49,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64
-          push: false
+          push: true
           # tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/debug.Dockerfile
   amd64:
@@ -62,8 +60,6 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
-        # with:
-        #   ref: 'jbowen93/debug-gh-action'
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -94,7 +90,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/amd64
-          push: false
+          push: true
           # tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/Dockerfile
   arm64-debug:
@@ -105,8 +101,6 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
-        # with:
-        #   ref: 'jbowen93/debug-gh-action'
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -136,7 +130,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/arm64
-          push: false
+          push: true
           # tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/debug.Dockerfile
   arm64:
@@ -147,8 +141,6 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
-        # with:
-        #   ref: 'jbowen93/debug-gh-action'
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v3
@@ -179,6 +171,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           platforms: linux/arm64
-          push: false
+          push: true
           # tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/Dockerfile
