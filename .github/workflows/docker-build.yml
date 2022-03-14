@@ -31,9 +31,9 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # list of Docker images to use as base name for tags
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha,prefix={{branch}}-
-          type=raw,value=mytag-{{branch}}-{{sha}}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=mytag-{{branch}}-{{sha}}
         #   type=schedule
         #   type=ref,event=branch
         #   type=ref,event=pr
@@ -117,9 +117,9 @@ jobs:
         uses: docker/metadata-action@v3
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-        tags: |
-          type=sha,prefix={{branch}}-
-          type=raw,value=mytag-{{branch}}-{{sha}}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=mytag-{{branch}}-{{sha}}
          
         # generate Docker tags based on the following events/attributes
         # tags: |
@@ -163,9 +163,9 @@ jobs:
           # list of Docker images to use as base name for tags
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha,prefix={{branch}}-
-          type=raw,value=mytag-{{branch}}-{{sha}}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=mytag-{{branch}}-{{sha}}
         #   type=schedule
         #   type=ref,event=branch
         #   type=ref,event=pr
