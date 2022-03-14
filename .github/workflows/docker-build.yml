@@ -139,7 +139,7 @@ jobs:
           push: false
           # tags: ghcr.io/jbowen93/evmos:gh-action
           file: docker/debug.Dockerfile
-arm64:
+  arm64:
     runs-on: "ubuntu-latest"
     permissions:
       contents: write 
