@@ -74,9 +74,9 @@ jobs:
           # list of Docker images to use as base name for tags
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # # generate Docker tags based on the following events/attributes
-        tags: |
-          type=sha,prefix={{branch}}-
-          type=raw,value=mytag-{{branch}}-{{sha}}
+          tags: |
+            type=sha,prefix={{branch}}-
+            type=raw,value=mytag-{{branch}}-{{sha}}
         
         #   type=schedule
         #   type=ref,event=branch
