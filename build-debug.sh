@@ -4,12 +4,16 @@ DOCKER_TAG=$1
 arch=$(uname -p)
 
 WORKDIR=$PWD
-rm -rf optimint ethermint
+rm -rf ethermint optimint
 
 # Get Optimint
 git clone git@github.com:celestiaorg/optimint.git -q
 echo "cloned optimint"
 cd optimint
+git checkout jbowen93/v0.1.1-coinbase
+echo "checked out jbowen93/v0.1.1-coinbase branch"
+# git checkout tzdybal/load_commit
+# echo "checked out tzdybal/load_commit branch"
 rm -rf .git
 go mod tidy -compat=1.17 -e
 echo "finished tidying optimint"
@@ -19,8 +23,10 @@ cd $WORKDIR
 git clone git@github.com:jbowen93/ethermint.git -q
 echo "cloned ethermint"
 cd ethermint
-git checkout jbowen93-optimint -q
-echo "checked out jbowen93-optimint branch"
+# git checkout jbowen93-optimint -q
+# echo "checked out jbowen93-optimint branch"
+git checkout test-patch -q
+echo "checked out test-patch branch"
 rm -rf .git
 go mod edit -replace=github.com/celestiaorg/optimint=../optimint
 go mod tidy -compat=1.17 -e
