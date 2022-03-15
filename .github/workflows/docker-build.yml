@@ -75,7 +75,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           # # generate Docker tags based on the following events/attributes
           tags: |
-            type=ref,event=push
+            type=sha
         
         #   type=schedule
         #   type=ref,event=branch
