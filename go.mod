@@ -44,7 +44,7 @@ require (
 	github.com/bgentry/speakeasy v0.1.0 // indirect
 	github.com/btcsuite/btcd v0.22.0-beta // indirect
 	github.com/btcsuite/btcutil v1.0.3-0.20201208143702-a53e38424cce // indirect
-	github.com/celestiaorg/optimint v0.1.1 // indirect
+	github.com/celestiaorg/optimint v0.1.2 // indirect
 	github.com/cenkalti/backoff/v4 v4.1.1 // indirect
 	github.com/cespare/xxhash v1.1.0 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
@@ -236,10 +236,8 @@ require (
 	nhooyr.io/websocket v1.8.7 // indirect
 )
 
-// replace google.golang.org/grpc => google.golang.org/grpc v1.33.2
-
-replace github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
-
-replace github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210622111912-ef00f8ac3d76
-
-replace github.com/tharsis/ethermint => github.com/celestiaorg/ethermint v0.6.1-0.20220314212000-7ff8d2522fd6
+replace (
+	github.com/99designs/keyring => github.com/cosmos/keyring v1.1.7-0.20210622111912-ef00f8ac3d76
+	github.com/gogo/protobuf => github.com/regen-network/protobuf v1.3.3-alpha.regen.1
+	github.com/tharsis/ethermint => github.com/jbowen93/ethermint v0.6.1-0.20220315195256-b5fa45e9887e
+)
