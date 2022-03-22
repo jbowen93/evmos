@@ -1,20 +1,21 @@
-FROM golang:1.17 AS build-env
-
-# Set up dependencies
-ENV COSMOS_BUILD_OPTIONS nostrip
-
-# Set working directory for the build
-WORKDIR /go/src/github.com/tharsis/evmos
+FROM --platform=$BUILDPLATFORM golang:1.17 AS build-env
 
 # Install dependencies
 RUN apt-get update
 RUN apt-get install git
 
-# Add source files
+# Set up env vars
+ENV COSMOS_BUILD_OPTIONS nostrip
+
+# Set working directory for the build
+WORKDIR /src 
+
+COPY go.mod go.sum ./
+RUN go mod download
 COPY . .
 
 # Make the binary
-RUN make build 
+RUN env GOOS=$TARGETOS GOARCH=$TARGETARCH make build 
 
 # Final image
 FROM debian
@@ -29,7 +30,7 @@ COPY docker/entrypoint.sh .
 COPY init.sh .
 
 # Copy over binaries from the build-env
-COPY --from=build-env /go/src/github.com/tharsis/evmos/build/evmosd /usr/bin/evmosd
+COPY --from=build-env /src/build/evmosd /usr/bin/evmosd
 
 EXPOSE 26656 26657
 
