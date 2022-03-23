@@ -11,7 +11,6 @@ ENV COSMOS_BUILD_OPTIONS nostrip
 WORKDIR /src 
 
 COPY . .
-# COPY go.mod go.sum ./
 RUN go mod download
 
 # Make the binary
