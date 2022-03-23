@@ -10,9 +10,9 @@ ENV COSMOS_BUILD_OPTIONS nostrip
 # Set working directory for the build
 WORKDIR /src 
 
-COPY go.mod go.sum ./
-RUN go mod download
 COPY . .
+# COPY go.mod go.sum ./
+RUN go mod download
 
 # Make the binary
 RUN env GOOS=$TARGETOS GOARCH=$TARGETARCH make build 
