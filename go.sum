@@ -207,8 +207,8 @@ github.com/buger/jsonparser v0.0.0-20181115193947-bf1c66bbce23/go.mod h1:bbYlZJ7
 github.com/c-bata/go-prompt v0.2.2/go.mod h1:VzqtzE2ksDBcdln8G7mk2RX9QyGjH+OVqOCSiVIqS34=
 github.com/casbin/casbin/v2 v2.1.2/go.mod h1:YcPU1XXisHhLzuxH9coDNf2FbKpjGlbCg3n9yuLkIJQ=
 github.com/casbin/casbin/v2 v2.37.0/go.mod h1:vByNa/Fchek0KZUgG5wEsl7iFsiviAYKRtgrQfcJqHg=
-github.com/celestiaorg/ethermint v0.11.1-0.20220322203052-989ea44a5f74 h1:3APZ1LlIlu+V4Xf0p//7WLBq09aIeleXp1KpzygNNxU=
-github.com/celestiaorg/ethermint v0.11.1-0.20220322203052-989ea44a5f74/go.mod h1:MuKw2MFm3cvOyk7uMIEKl2x3BeF2UHxJrDh74ZgbVfg=
+github.com/celestiaorg/ethermint v0.11.1-0.20220323150518-1c1b98ef94c6 h1:7SWssHnB2J/IeQpZVXf/kX0U2GGMmjKjYDGz5OY0IaQ=
+github.com/celestiaorg/ethermint v0.11.1-0.20220323150518-1c1b98ef94c6/go.mod h1:MuKw2MFm3cvOyk7uMIEKl2x3BeF2UHxJrDh74ZgbVfg=
 github.com/celestiaorg/optimint v0.1.2 h1:XJMg9mEfQTRsDUyAqzh4/Id7ZCWOml2E7lKH/vvxCfM=
 github.com/celestiaorg/optimint v0.1.2/go.mod h1:CIZ+IHG1Bb/rbh/1wYCMBGt0mV/CdQEFViHkLWNMvsY=
 github.com/cenkalti/backoff v2.2.1+incompatible h1:tNowT99t7UNflLxfYYSlKYsBpXdEet03Pg2g16Swow4=
