@@ -71,6 +71,12 @@ jobs:
         export EVMOS_IMAGE_TAG=sha-$(git rev-parse --short "$GITHUB_SHA")
         cd ephemeral-cluster
         ./debug-start-cluster.sh 
+    - name: Clone ethermint repo
+      uses: actions/checkout@v2
+      with:
+        repository: celestiaorg/ethermint
+        path: ethermint
+        ref: v0.11.0+0.1.0
     - name: "Test Cluster"
       run: | 
         docker ps -a
@@ -84,5 +90,5 @@ jobs:
         docker logs dalc0
         echo "------------- docker logs evmos0 -------------"
         docker logs evmos0
-        cd /home/runner/work/ethermint/ethermint
+        cd /home/runner/work/evmos/evmos/ethermint
         MODE=rpc HOST=http://127.0.0.1:8545 go test ./tests/rpc/...
